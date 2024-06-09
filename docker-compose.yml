@@ -1,0 +1,26 @@
+version: '3'
+services:
+  todo_app:
+    image: node:18-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+    networks:
+      - 127.0.0.1
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=1234
+      - MYSQL_DB=todos
+    command: sh -c "yarn install && yarn run dev"
+
+  mysql:
+    image: mysql:8.0
+    networks:
+      - 127.0.0.1
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=todos
+
+networks:
+  127.0.0.1:
